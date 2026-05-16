@@ -25,3 +25,39 @@ The first backend version should focus on the core calendar and scheduling flow:
 4. Store the schedule entry under the resolved date.
 5. Detect overlapping entries for the same date and time range.
 6. Return conflict information while preserving all conflicting entries.
+
+## Running the Backend
+
+This first implementation uses only the Python standard library.
+
+```bash
+python3 run_server.py --port 8000
+```
+
+Health check:
+
+```bash
+curl http://127.0.0.1:8000/health
+```
+
+Get a monthly calendar:
+
+```bash
+curl "http://127.0.0.1:8000/calendar/month?year=2026&month=5"
+```
+
+Add a schedule entry from natural language:
+
+```bash
+curl -X POST http://127.0.0.1:8000/schedule \
+  -H "Content-Type: application/json" \
+  -d '{"text":"2026-05-20 14:00-15:00 backend planning"}'
+```
+
+## Development
+
+Run the test suite:
+
+```bash
+python3 -m unittest discover -s tests
+```
